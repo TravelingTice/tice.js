@@ -1,0 +1,11 @@
+{
+  "name": "tice.js",
+  "version": "0.0.2",
+  "description": "A better fetch library",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Matthijs Kralt",
+  "license": "MIT"
+}
