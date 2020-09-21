@@ -1,4 +1,4 @@
-const validUrl = require("./validUrl");
+const validUrl = require("../../utils/validUrl");
 
 describe("validUrl util function", () => {
   test("should throw argument error when passed no arguments", () => {

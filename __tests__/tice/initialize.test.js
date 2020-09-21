@@ -1,6 +1,6 @@
-const Tice = require("./index");
+const Tice = require("../../index");
 
-describe("Tice main class", () => {
+describe("Tice init main class", () => {
   test("New instance should be of class Tice", () => {
     const tice = new Tice();
 
@@ -17,8 +17,8 @@ describe("Tice main class", () => {
     expect(tice.baseEndpoint).toBe("");
   });
 
-  test("Tice can be initialized with a valid endpoint", () => {
-    const url = "https://youtube.com";
+  test("can be initialized with a valid endpoint", () => {
+    const url = "https://your-api-endpoint.com/v1";
 
     expect(() => new Tice({ baseEndpoint: url })).not.toThrow();
 
@@ -27,7 +27,7 @@ describe("Tice main class", () => {
     expect(tice.baseEndpoint).toBe(url);
   });
 
-  test("Tice cannot be initialized with a non valid base endpoint", () => {
+  test("cannot be initialized with a non valid base endpoint", () => {
     const nonValidUrl = "youtube";
 
     expect(() => new Tice({ baseEndpoint: nonValidUrl })).toThrow();
