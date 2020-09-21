@@ -1,3 +1,3 @@
-export const get = () => {
-  console.log('this is a get');
-}
+class Tice {}
+
+module.exports = Tice;
