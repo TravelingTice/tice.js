@@ -1,15 +1,3 @@
-const validUrl = require("./utils/validUrl");
-
-class Tice {
-  constructor(options = {}) {
-    if (!options.baseEndpoint) return (this.baseEndpoint = "");
-
-    if (!validUrl(options.baseEndpoint)) {
-      throw new Error("Please provide a valid url for the base endpoint");
-    }
-
-    this.baseEndpoint = options.baseEndpoint;
-  }
-}
+const Tice = require("./src/Tice");
 
 module.exports = Tice;
