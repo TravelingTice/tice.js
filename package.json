@@ -3,6 +3,10 @@
   "version": "0.1.1",
   "description": "A better fetch library",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TravelingTice/tice.js.git"
+  },
   "scripts": {
     "test": "jest"
   },

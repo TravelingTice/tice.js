@@ -12,6 +12,8 @@ yarn add tice.js
 It is advised to do this in one file, which you can call something like `api.config.js` or `api.init.js` where the global options of your api will be applied to an instance of the Tice class:
 
 ```
+import Tice from 'tice.js';
+
 const tice = new Tice('https://your-api-endpoint/v1');
 
 export default tice;
