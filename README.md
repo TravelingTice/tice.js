@@ -21,6 +21,12 @@ export default tice;
 
 ## Usage
 
+Import the individual actions that you want and extract them from the default exported tice object.
+
+```
+import { get, post, put, patch, delete } from 'path/to/api.config.js';
+```
+
 ### GET request:
 
 ```
