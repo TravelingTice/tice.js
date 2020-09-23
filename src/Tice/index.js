@@ -1,4 +1,5 @@
 const validUrl = require("../utils/validUrl");
+const fetch = require("node-fetch");
 
 class Tice {
   constructor(options = {}) {
@@ -10,6 +11,10 @@ class Tice {
 
     this.baseEndpoint = options.baseEndpoint;
   }
+
+  get = (endpoint = "") => {
+    return fetch(endpoint);
+  };
 }
 
 module.exports = Tice;
