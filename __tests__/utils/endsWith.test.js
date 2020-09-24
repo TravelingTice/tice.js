@@ -1,9 +1,9 @@
 const endsWith = require("../../src/utils/endsWith");
 
 describe("EndsWith util function", () => {
-  test("Throws when wrong number of arguments are given", () => {
-    expect(() => endsWith()).toThrow();
-    expect(() => endsWith("hi there")).toThrow();
+  test("Works with wrong number of arguments", () => {
+    expect(endsWith()).toBeFalsy();
+    expect(endsWith("hi there")).toBeFalsy();
   });
 
   test("Will work with empty strings", () => {

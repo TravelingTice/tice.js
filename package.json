@@ -13,9 +13,10 @@
   "author": "Matthijs Kralt",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^26.4.2"
+    "jest": "^26.4.2",
+    "node-fetch": "^2.6.1"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "isomorphic-fetch": "^3.0.0"
   }
 }

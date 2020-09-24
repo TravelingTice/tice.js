@@ -1,6 +1,5 @@
 const endsWith = (strNum, char) => {
-  if (strNum === undefined || char === undefined)
-    throw new Error("Wrong number of arguments given");
+  if (strNum === undefined || char === undefined) return false;
 
   strNum = strNum.toString();
 
