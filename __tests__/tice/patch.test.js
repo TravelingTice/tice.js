@@ -29,6 +29,14 @@ beforeEach(() => {
 });
 
 describe("Patch feature in Tice.js", () => {
+  test("is a function", () => {
+    expect(typeof tice.patch).toBe("function");
+  });
+
+  test("returns a thenable object/promise", async () => {
+    expect(typeof tice.patch().then).toBe("function");
+  });
+
   test("should call fetch with method patch", () => {
     const { patch } = tice;
 

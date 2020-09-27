@@ -29,6 +29,14 @@ beforeEach(() => {
 });
 
 describe("Put feature in Tice.js", () => {
+  test("is a function", () => {
+    expect(typeof tice.put).toBe("function");
+  });
+
+  test("returns a thenable object/promise", async () => {
+    expect(typeof tice.put().then).toBe("function");
+  });
+
   test("should call fetch with method PUT", () => {
     const { put } = tice;
 

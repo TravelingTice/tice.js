@@ -51,11 +51,27 @@ class Tice {
     return this.fetchAction(address, fetchOptions);
   };
 
+  _delete = (endpoint = "/", options) => {
+    const address = this.constructAddress(endpoint);
+
+    const fetchOptions = this.constructFetchOptionsFromOptions(
+      options,
+      "DELETE"
+    );
+
+    return this.fetchAction(address, fetchOptions);
+  };
+
   constructFetchOptionsFromOptions = (options, method) => {
     const fetchOptions = {};
 
     if (method) {
       fetchOptions.method = method;
+    }
+
+    const methodsWithContentType = ["POST", "PUT", "PATCH"];
+
+    if (methodsWithContentType.includes(method)) {
       fetchOptions["Content-Type"] = "application/json";
     }
 
