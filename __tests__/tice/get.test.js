@@ -121,7 +121,7 @@ describe("Get feature in Tice.js", () => {
 
     const data = await get();
 
-    expect(typeof data).toBe("string");
+    expect(data).toBe("<h2>TEst text</h2>");
   });
 
   test("Will work when the passed in url is a new url, then it will not use the base endpoint", () => {

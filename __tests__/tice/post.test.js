@@ -79,4 +79,28 @@ describe("Post feature in Tice.js", () => {
       },
     });
   });
+
+  test("should receive a parsed json response", async () => {
+    const { post } = tice;
+
+    const data = await post();
+
+    expect(data).toMatchObject(sampleFetchResponse);
+  });
+
+  test("should receive a parsed text response", async () => {
+    const { post } = tice;
+
+    fetch.mockImplementation(() => {
+      return Promise.resolve(
+        new Response("<h2>TEst text</h2>", {
+          headers: { "Content-Type": "text/plain" },
+        })
+      );
+    });
+
+    const data = await post();
+
+    expect(data).toBe("<h2>TEst text</h2>");
+  });
 });
