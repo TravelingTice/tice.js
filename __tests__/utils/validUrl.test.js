@@ -19,6 +19,12 @@ describe("validUrl util function", () => {
     expect(validUrl(url)).toBe(true);
   });
 
+  test("should return true for a localhost url", () => {
+    const url = "http://localhost:3001";
+
+    expect(validUrl(url)).toBe(true);
+  });
+
   test("should return false for a non valid url", () => {
     const url = "youtube";
 

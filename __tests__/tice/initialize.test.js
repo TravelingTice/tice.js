@@ -32,4 +32,10 @@ describe("Tice init main class", () => {
 
     expect(() => new Tice({ baseEndpoint: nonValidUrl })).toThrow();
   });
+
+  test("can be initialized with localhost endpoint", () => {
+    const localhost = "http://localhost:3000/";
+
+    expect(() => new Tice({ baseEndpoint: localhost })).not.toThrow();
+  });
 });
