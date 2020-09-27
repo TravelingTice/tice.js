@@ -24,16 +24,47 @@ class Tice {
   post = (endpoint = "/", body, options) => {
     const address = this.constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(options);
+    const fetchOptions = this.constructFetchOptionsFromOptions(options, "POST");
+    fetchOptions.body = JSON.stringify(body);
 
-    const postFetchOptions = {
-      method: "POST",
-      "Content-Type": "application/json",
-      body: JSON.stringify(body),
-      ...fetchOptions,
-    };
+    return this.fetchAction(address, fetchOptions);
+  };
 
-    return this.fetchAction(address, postFetchOptions);
+  put = (endpoint = "/", body, options) => {
+    const address = this.constructAddress(endpoint);
+
+    const fetchOptions = this.constructFetchOptionsFromOptions(options, "PUT");
+    fetchOptions.body = JSON.stringify(body);
+
+    return this.fetchAction(address, fetchOptions);
+  };
+
+  patch = (endpoint = "/", body, options) => {
+    const address = this.constructAddress(endpoint);
+
+    const fetchOptions = this.constructFetchOptionsFromOptions(
+      options,
+      "PATCH"
+    );
+    fetchOptions.body = JSON.stringify(body);
+
+    return this.fetchAction(address, fetchOptions);
+  };
+
+  constructFetchOptionsFromOptions = (options, method) => {
+    const fetchOptions = {};
+
+    if (method) {
+      fetchOptions.method = method;
+      fetchOptions["Content-Type"] = "application/json";
+    }
+
+    if (this.willSendToken(options)) {
+      fetchOptions.headers = {};
+      fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
+    }
+
+    return fetchOptions;
   };
 
   fetchAction = (address, object) => {
@@ -48,17 +79,6 @@ class Tice {
     } else {
       return this.baseEndpoint + endpoint;
     }
-  };
-
-  constructFetchOptionsFromOptions = (options) => {
-    const fetchOptions = {};
-
-    if (this.willSendToken(options)) {
-      fetchOptions.headers = {};
-      fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
-    }
-
-    return fetchOptions;
   };
 
   willSendToken = (options) => {

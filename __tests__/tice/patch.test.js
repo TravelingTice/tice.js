@@ -8,7 +8,7 @@ const tice = new Tice({ baseEndpoint: TEST_API_ENDPOINT });
 
 const sampleFetchResponse = {
   success: true,
-  message: "it has been added",
+  message: "it has been updated",
 };
 
 // Mock the fetch function for us
@@ -18,7 +18,7 @@ fetch.mockImplementation(() => {
     new Response(JSON.stringify(sampleFetchResponse), {
       headers: { "Content-Type": "application/json" },
       ok: true,
-      status: 201,
+      status: 200,
     })
   );
 });
@@ -28,37 +28,37 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe("Post feature in Tice.js", () => {
-  test("should call fetch with method POST", () => {
-    const { post } = tice;
+describe("Patch feature in Tice.js", () => {
+  test("should call fetch with method patch", () => {
+    const { patch } = tice;
 
-    post();
+    patch();
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT + "/", {
-      method: "POST",
+      method: "PATCH",
       "Content-Type": "application/json",
     });
   });
 
   test("should call fetch with body", () => {
-    const { post } = tice;
+    const { patch } = tice;
 
     const bodyObj = {
       value1: "Hi",
       value2: "there",
     };
 
-    post("", bodyObj);
+    patch("", bodyObj);
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
-      method: "POST",
+      method: "PATCH",
       "Content-Type": "application/json",
       body: JSON.stringify(bodyObj),
     });
   });
 
   test("should work with token", () => {
-    const { post } = tice;
+    const { patch } = tice;
 
     tice.defaultBearerToken = "mysecret";
     tice.defaultSendToken = true;
@@ -68,10 +68,10 @@ describe("Post feature in Tice.js", () => {
       value2: "there",
     };
 
-    post("", bodyObj);
+    patch("", bodyObj);
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
-      method: "POST",
+      method: "PATCH",
       "Content-Type": "application/json",
       body: JSON.stringify(bodyObj),
       headers: {
@@ -81,15 +81,15 @@ describe("Post feature in Tice.js", () => {
   });
 
   test("should receive a parsed json response", async () => {
-    const { post } = tice;
+    const { patch } = tice;
 
-    const data = await post();
+    const data = await patch();
 
     expect(data).toMatchObject(sampleFetchResponse);
   });
 
   test("should receive a parsed text response", async () => {
-    const { post } = tice;
+    const { patch } = tice;
 
     fetch.mockImplementation(() => {
       return Promise.resolve(
@@ -99,7 +99,7 @@ describe("Post feature in Tice.js", () => {
       );
     });
 
-    const data = await post();
+    const data = await patch();
 
     expect(data).toBe("<h2>TEst text</h2>");
   });
