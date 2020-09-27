@@ -1,25 +1,20 @@
 const validUrl = require("../utils/validUrl");
 const fetch = require("isomorphic-fetch");
 const endsWith = require("../utils/endsWith");
+const sanitizeUrl = require("../utils/sanitizeUrl");
 
 class Tice {
   constructor(options = {}) {
-    if (!options.baseEndpoint) return (this.baseEndpoint = "");
+    this.baseEndpoint = sanitizeUrl(options.baseEndpoint);
+    this.defaultBearerToken = options.defaultBearerToken;
+    this.defaultSendToken = options.defaultSendToken;
 
-    if (!validUrl(options.baseEndpoint)) {
-      throw new Error("Please provide a valid url for the base endpoint");
-    }
-
-    // ends with trailing slash
-    if (endsWith(options.baseEndpoint, "/")) {
-      return (this.baseEndpoint = options.baseEndpoint.substring(
-        0,
-        options.baseEndpoint.length - 1
-      ));
-    }
-
-    this.baseEndpoint = options.baseEndpoint;
+    // this.initBearerTokenOptions({ defaultSendToken: options.defaultSendToken });
   }
+
+  initBearerToken = (newToken) => {
+    this.defaultBearerToken = newToken;
+  };
 
   get = (endpoint = "/") => {
     const address = this.baseEndpoint + endpoint;
