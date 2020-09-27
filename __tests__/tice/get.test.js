@@ -40,7 +40,8 @@ describe("Get feature in Tice.js", () => {
 
     expect(fetch.mock.calls.length).toBe(1);
 
-    expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/");
+    // second param is options, which by default is an empty object
+    expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/", {});
   });
 
   test("Will fetch the home point when having no base endpoint", () => {
@@ -50,7 +51,7 @@ describe("Get feature in Tice.js", () => {
 
     expect(fetch.mock.calls.length).toBe(1);
 
-    expect(fetch).toHaveBeenCalledWith("/");
+    expect(fetch).toHaveBeenCalledWith("/", {});
   });
 
   test("Will fetch a generic endpoint without trailing slash in the base endpoint", () => {
@@ -58,18 +59,20 @@ describe("Get feature in Tice.js", () => {
 
     get("/");
     expect(fetch.mock.calls.length).toBe(1);
-    expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/");
+    expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/", {});
 
     get("/customers/1");
     expect(fetch.mock.calls.length).toBe(2);
     expect(fetch).toHaveBeenCalledWith(
-      "https://myexampleapp.com/v1/customers/1"
+      "https://myexampleapp.com/v1/customers/1",
+      {}
     );
 
     get("/customers/1?embed=true");
     expect(fetch.mock.calls.length).toBe(3);
     expect(fetch).toHaveBeenCalledWith(
-      "https://myexampleapp.com/v1/customers/1?embed=true"
+      "https://myexampleapp.com/v1/customers/1?embed=true",
+      {}
     );
   });
 
@@ -80,16 +83,20 @@ describe("Get feature in Tice.js", () => {
 
     get("/");
     expect(fetch.mock.calls.length).toBe(1);
-    expect(fetch).toHaveBeenCalledWith("https://exampleapi.com/v1/");
+    expect(fetch).toHaveBeenCalledWith("https://exampleapi.com/v1/", {});
 
     get("/customers/1");
     expect(fetch.mock.calls.length).toBe(2);
-    expect(fetch).toHaveBeenCalledWith("https://exampleapi.com/v1/customers/1");
+    expect(fetch).toHaveBeenCalledWith(
+      "https://exampleapi.com/v1/customers/1",
+      {}
+    );
 
     get("/customers/1?embed=true");
     expect(fetch.mock.calls.length).toBe(3);
     expect(fetch).toHaveBeenCalledWith(
-      "https://exampleapi.com/v1/customers/1?embed=true"
+      "https://exampleapi.com/v1/customers/1?embed=true",
+      {}
     );
   });
 
@@ -115,5 +122,13 @@ describe("Get feature in Tice.js", () => {
     const data = await get();
 
     expect(typeof data).toBe("string");
+  });
+
+  test("Will work when the passed in url is a new url, then it will not use the base endpoint", () => {
+    const { get } = tice;
+
+    get("https://api.kanye.rest");
+
+    expect(fetch).toHaveBeenCalledWith("https://api.kanye.rest", {});
   });
 });

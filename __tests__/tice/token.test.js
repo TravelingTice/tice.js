@@ -11,15 +11,15 @@ const TEST_API_ENDPOINT = "https://myexampleapp.com/v1";
 //   message: "hi there",
 // };
 
-// // Mock the fetch function for us
-// jest.mock("isomorphic-fetch");
-// fetch.mockImplementation(() => {
-//   return Promise.resolve(
-//     new Response(JSON.stringify(sampleFetchResponse), {
-//       headers: { "Content-Type": "application/json" },
-//     })
-//   );
-// });
+// Mock the fetch function for us
+jest.mock("isomorphic-fetch");
+fetch.mockImplementation(() => {
+  return Promise.resolve(
+    new Response(JSON.stringify({ success: true }), {
+      headers: { "Content-Type": "application/json" },
+    })
+  );
+});
 
 // Clear all mocks before each test
 beforeEach(() => {
@@ -50,6 +50,45 @@ describe("Tice token workings", () => {
       defaultBearerToken: "mysecrettoken",
     });
 
+    expect(tice.defaultBearerToken).toBe("mysecrettoken");
     expect(tice.defaultSendToken).toBe(false);
+  });
+
+  test("should not pass bearer token by default", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+      defaultBearerToken: "mysecrettoken",
+    });
+
+    tice.get("");
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {});
+  });
+
+  test("use get function with passing in the bearer token should pass it into fetch function", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+      defaultBearerToken: "mysecrettoken",
+    });
+
+    tice.get("", { sendToken: true });
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
+      headers: { Authorization: "bearer mysecrettoken" },
+    });
+  });
+
+  test("should pass bearer token into fetch function when setting defaultSendToken to true", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+      defaultBearerToken: "mysecrettoken",
+      defaultSendToken: true,
+    });
+
+    tice.get("");
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
+      headers: { Authorization: "bearer mysecrettoken" },
+    });
   });
 });

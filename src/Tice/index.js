@@ -7,19 +7,15 @@ class Tice {
   constructor(options = {}) {
     this.baseEndpoint = sanitizeUrl(options.baseEndpoint);
     this.defaultBearerToken = options.defaultBearerToken;
-    this.defaultSendToken = options.defaultSendToken;
-
-    // this.initBearerTokenOptions({ defaultSendToken: options.defaultSendToken });
+    this.defaultSendToken = options.defaultSendToken || false;
   }
 
-  initBearerToken = (newToken) => {
-    this.defaultBearerToken = newToken;
-  };
+  get = (endpoint = "/", options) => {
+    const address = this.constructAddress(endpoint);
 
-  get = (endpoint = "/") => {
-    const address = this.baseEndpoint + endpoint;
+    const fetchOptions = this.constructFetchOptionsFromOptions(options);
 
-    return fetch(address).then((res) => {
+    return fetch(address, fetchOptions).then((res) => {
       const contentType = res.headers.get("Content-Type");
 
       if (contentType.match(/application\/json/)) return res.json();
@@ -27,6 +23,33 @@ class Tice {
 
       return res.blob();
     });
+  };
+
+  constructAddress = (endpoint) => {
+    if (validUrl(endpoint)) {
+      return endpoint;
+    } else {
+      return this.baseEndpoint + endpoint;
+    }
+  };
+
+  constructFetchOptionsFromOptions = (options) => {
+    const fetchOptions = {};
+
+    if (this.willSendToken(options)) {
+      fetchOptions.headers = {};
+      fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
+    }
+
+    return fetchOptions;
+  };
+
+  willSendToken = (options) => {
+    if (!options) {
+      return this.defaultSendToken;
+    }
+
+    return options.sendToken;
   };
 }
 
