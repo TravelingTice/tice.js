@@ -91,6 +91,19 @@ put("https://api.com/put-endpoint", {
 
 ### DELETE request
 
+Because the `delete` keyword is a reserved word in Javascript, you can use the `_delete` method from Tice:
+
 ```javascript
-delete "https://api.com/put-endpoint";
+_delete("https://api.com/put-endpoint");
+```
+
+## Error handling
+
+Same as for error handling, this can be extremely cumbersome and repetitive to having to do that on every request. Hence, you can explicitly tell what to do when there is an error in processing the request (the catch block of fetch is called):
+
+```javascript
+const tice = new Tice({
+  baseEndpoint: "https://myendpoint.com/v1",
+  defaultOnError: (err) => console.log(err),
+});
 ```
