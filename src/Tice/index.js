@@ -14,55 +14,58 @@ class Tice {
   defaultErrorHandler = (err) => console.log(err);
 
   get = (endpoint = "/", options) => {
-    const address = this.constructAddress(endpoint);
+    const address = this.#constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(options);
+    const fetchOptions = this.#constructFetchOptionsFromOptions(options);
 
-    return this.fetchAction(address, fetchOptions);
+    return this.#fetchAction(address, fetchOptions);
   };
 
   post = (endpoint = "/", body, options) => {
-    const address = this.constructAddress(endpoint);
+    const address = this.#constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(options, "POST");
+    const fetchOptions = this.#constructFetchOptionsFromOptions(
+      options,
+      "POST"
+    );
     fetchOptions.body = JSON.stringify(body);
 
-    return this.fetchAction(address, fetchOptions);
+    return this.#fetchAction(address, fetchOptions);
   };
 
   put = (endpoint = "/", body, options) => {
-    const address = this.constructAddress(endpoint);
+    const address = this.#constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(options, "PUT");
+    const fetchOptions = this.#constructFetchOptionsFromOptions(options, "PUT");
     fetchOptions.body = JSON.stringify(body);
 
-    return this.fetchAction(address, fetchOptions);
+    return this.#fetchAction(address, fetchOptions);
   };
 
   patch = (endpoint = "/", body, options) => {
-    const address = this.constructAddress(endpoint);
+    const address = this.#constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(
+    const fetchOptions = this.#constructFetchOptionsFromOptions(
       options,
       "PATCH"
     );
     fetchOptions.body = JSON.stringify(body);
 
-    return this.fetchAction(address, fetchOptions);
+    return this.#fetchAction(address, fetchOptions);
   };
 
   _delete = (endpoint = "/", options) => {
-    const address = this.constructAddress(endpoint);
+    const address = this.#constructAddress(endpoint);
 
-    const fetchOptions = this.constructFetchOptionsFromOptions(
+    const fetchOptions = this.#constructFetchOptionsFromOptions(
       options,
       "DELETE"
     );
 
-    return this.fetchAction(address, fetchOptions);
+    return this.#fetchAction(address, fetchOptions);
   };
 
-  constructFetchOptionsFromOptions = (options, method) => {
+  #constructFetchOptionsFromOptions = (options, method) => {
     const fetchOptions = {};
 
     if (method) {
@@ -75,7 +78,7 @@ class Tice {
       fetchOptions["Content-Type"] = "application/json";
     }
 
-    if (this.willSendToken(options)) {
+    if (this.#willSendToken(options)) {
       fetchOptions.headers = {};
       fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
     }
@@ -83,13 +86,13 @@ class Tice {
     return fetchOptions;
   };
 
-  fetchAction = (address, object) => {
+  #fetchAction = (address, object) => {
     return fetch(address, object)
       .then((res) => handleResponse(res))
       .catch(this.defaultOnError);
   };
 
-  constructAddress = (endpoint) => {
+  #constructAddress = (endpoint) => {
     if (validUrl(endpoint)) {
       return endpoint;
     } else {
@@ -97,7 +100,7 @@ class Tice {
     }
   };
 
-  willSendToken = (options) => {
+  #willSendToken = (options) => {
     if (!options) {
       return this.defaultSendToken;
     }
