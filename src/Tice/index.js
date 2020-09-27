@@ -6,12 +6,12 @@ const handleResponse = require("../utils/handleResponse");
 class Tice {
   constructor(options = {}) {
     this.baseEndpoint = sanitizeUrl(options.baseEndpoint);
-    this.defaultOnError = options.defaultOnError;
+    this.defaultOnError = options.defaultOnError || this.#defaultErrorHandler;
     this.defaultBearerToken = options.defaultBearerToken;
     this.defaultSendToken = options.defaultSendToken || false;
   }
 
-  defaultErrorHandler = (err) => console.log(err);
+  #defaultErrorHandler = (err) => console.log(err);
 
   get = (endpoint = "/", options) => {
     const address = this.#constructAddress(endpoint);
