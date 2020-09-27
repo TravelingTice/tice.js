@@ -1,6 +1,5 @@
 const validUrl = require("../utils/validUrl");
 const fetch = require("isomorphic-fetch");
-const endsWith = require("../utils/endsWith");
 const sanitizeUrl = require("../utils/sanitizeUrl");
 
 class Tice {

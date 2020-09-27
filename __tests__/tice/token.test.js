@@ -91,4 +91,22 @@ describe("Tice token workings", () => {
       headers: { Authorization: "bearer mysecrettoken" },
     });
   });
+
+  test("sendToken should overwrite the default settings", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+      defaultBearerToken: "mysecret",
+      defaultSendToken: true,
+    });
+
+    tice.get("", { sendToken: false });
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {});
+
+    tice.get("", { sendToken: true });
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
+      headers: { Authorization: "bearer mysecret" },
+    });
+  });
 });
