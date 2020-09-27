@@ -1,6 +1,7 @@
 const validUrl = require("../utils/validUrl");
 const fetch = require("isomorphic-fetch");
 const sanitizeUrl = require("../utils/sanitizeUrl");
+const handleResponse = require("../utils/handleResponse");
 
 class Tice {
   constructor(options = {}) {
@@ -14,14 +15,20 @@ class Tice {
 
     const fetchOptions = this.constructFetchOptionsFromOptions(options);
 
-    return fetch(address, fetchOptions).then((res) => {
-      const contentType = res.headers.get("Content-Type");
+    return fetch(address, fetchOptions).then((res) => handleResponse(res));
+  };
 
-      if (contentType.match(/application\/json/)) return res.json();
-      if (contentType.match(/text\/plain/)) return res.text();
+  post = (endpoint = "/", body, options) => {
+    const address = this.constructAddress(endpoint);
 
-      return res.blob();
-    });
+    const fetchOptions = this.constructFetchOptionsFromOptions(options);
+
+    return fetch(address, {
+      method: "POST",
+      "Content-Type": "application/json",
+      body: JSON.stringify(body),
+      ...fetchOptions,
+    }).then((res) => handleResponse(res));
   };
 
   constructAddress = (endpoint) => {
