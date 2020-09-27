@@ -52,7 +52,8 @@ import { get, post, put, patch, delete } from "path/to/api.config.js";
 get("https://api.com/endpoint");
 ```
 
-This will return a promise with the data object already `json()`'d
+This will return a promise with the data object already `json()`'d.
+Right now tice.get requests only support json responses and plain text responses, it will look at the `Content-Type` header in the response and process it accordingly.
 
 ### POST request:
 
@@ -64,6 +65,20 @@ post("https://api.com/post-endpoint", {
 ```
 
 No need to `JSON.stringify` it, we do that for you.
+Putting the token option with post requests is done with the 3rd parameter:
+
+```javascript
+post(
+  "https://api.com/post-endpoint",
+  {
+    field1: "value1",
+    field2: "value2",
+  },
+  { sendToken: true }
+);
+```
+
+Post requests automatically have the header `'Content-Type': 'application/json'`
 
 ### PUT request
 
