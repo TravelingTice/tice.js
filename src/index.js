@@ -1,5 +1,3 @@
-const Tice = require("./Tice");
+import Tice from "./Tice";
 
-module.exports = Tice;
-
-module.exports.get = Tice.get;
+export default Tice;

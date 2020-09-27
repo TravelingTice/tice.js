@@ -1,4 +1,4 @@
-const Tice = require("../../src/Tice");
+import Tice from "../../src/Tice";
 
 describe("Tice init main class", () => {
   test("New instance should be of class Tice", () => {

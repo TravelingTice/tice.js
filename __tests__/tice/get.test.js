@@ -1,5 +1,5 @@
-const Tice = require("../../src/Tice");
-const fetch = require("isomorphic-fetch");
+import Tice from "../../src/Tice";
+import fetch from "isomorphic-fetch";
 const { Response } = jest.requireActual("node-fetch");
 
 const TEST_API_ENDPOINT = "https://myexampleapp.com/v1";

@@ -1,4 +1,4 @@
-const endsWith = require("../../src/utils/endsWith");
+import endsWith from "../../src/utils/endsWith";
 
 describe("EndsWith util function", () => {
   test("Works with wrong number of arguments", () => {

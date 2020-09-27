@@ -1,5 +1,5 @@
-const Tice = require("../../src/Tice");
-const fetch = require("isomorphic-fetch");
+import Tice from "../../src/Tice";
+import fetch from "isomorphic-fetch";
 
 jest.mock("isomorphic-fetch");
 // mock implementation with failing promise

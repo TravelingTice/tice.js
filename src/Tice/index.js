@@ -1,7 +1,7 @@
-const validUrl = require("../utils/validUrl");
-const fetch = require("isomorphic-fetch");
-const sanitizeUrl = require("../utils/sanitizeUrl");
-const handleResponse = require("../utils/handleResponse");
+import fetch from "isomorphic-fetch";
+import validUrl from "../utils/validUrl";
+import sanitizeUrl from "../utils/sanitizeUrl";
+import handleResponse from "../utils/handleResponse";
 
 class Tice {
   constructor(options = {}) {
@@ -109,4 +109,4 @@ class Tice {
   };
 }
 
-module.exports = Tice;
+export default Tice;

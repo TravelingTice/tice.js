@@ -1,4 +1,4 @@
-const sanitizeUrl = require("../../src/utils/sanitizeUrl");
+import sanitizeUrl from "../../src/utils/sanitizeUrl";
 
 describe("Sanitize url function", () => {
   test("Should return empty string for no parameters", () => {

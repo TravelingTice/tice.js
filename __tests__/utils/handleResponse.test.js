@@ -1,5 +1,5 @@
-const handleResponse = require("../../src/utils/handleResponse");
-const fetch = require("isomorphic-fetch");
+import handleResponse from "../../src/utils/handleResponse";
+import fetch from "isomorphic-fetch";
 const { Response } = jest.requireActual("node-fetch");
 
 const testResponse = new Response(JSON.stringify({ success: true }), {
