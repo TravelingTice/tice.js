@@ -44,7 +44,9 @@ describe("Patch feature in Tice.js", () => {
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT + "/", {
       method: "PATCH",
-      "Content-Type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   });
 
@@ -60,7 +62,9 @@ describe("Patch feature in Tice.js", () => {
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
       method: "PATCH",
-      "Content-Type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(bodyObj),
     });
   });
@@ -80,9 +84,9 @@ describe("Patch feature in Tice.js", () => {
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
       method: "PATCH",
-      "Content-Type": "application/json",
       body: JSON.stringify(bodyObj),
       headers: {
+        "Content-Type": "application/json",
         Authorization: "bearer mysecret",
       },
     });
