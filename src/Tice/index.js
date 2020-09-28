@@ -74,14 +74,18 @@ class Tice {
 
     const methodsWithContentType = ["POST", "PUT", "PATCH"];
 
+    console.log(methodsWithContentType.includes(method));
+
     if (methodsWithContentType.includes(method)) {
       fetchOptions["Content-Type"] = "application/json";
     }
 
-    if (this.#willSendToken(options)) {
+    if (this.#willSendToken(options) && this.defaultBearerToken) {
       fetchOptions.headers = {};
       fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
     }
+
+    console.log(fetchOptions);
 
     return fetchOptions;
   };

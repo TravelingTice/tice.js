@@ -65,6 +65,31 @@ describe("Tice token workings", () => {
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {});
   });
 
+  test("should not pass token when set to true, but there is no token", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+    });
+
+    expect(tice.defaultBearerToken).toBe(undefined);
+
+    tice.get("", { sendToken: true });
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {});
+  });
+
+  test("should not pass token when set to true, but token is an empty string", () => {
+    const tice = new Tice({
+      baseEndpoint: TEST_API_ENDPOINT,
+      defaultBearerToken: "",
+    });
+
+    expect(tice.defaultBearerToken).toBe("");
+
+    tice.get("", { sendToken: true });
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {});
+  });
+
   test("use get function with passing in the bearer token should pass it into fetch function", () => {
     const tice = new Tice({
       baseEndpoint: TEST_API_ENDPOINT,
