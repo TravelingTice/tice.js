@@ -6,6 +6,9 @@ const validUrl = (url) => {
     throw new Error("Missing url argument");
   }
 
+  // split off any params for url checking
+  url = url.split("?")[0];
+
   if (localhostRegex.test(url)) return true;
 
   return regex.test(url);

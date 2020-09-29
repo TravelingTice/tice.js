@@ -30,4 +30,10 @@ describe("validUrl util function", () => {
 
     expect(validUrl(url)).toBe(false);
   });
+
+  test("should return false for non valid url with url in param", () => {
+    const path = "/companies/send-preview-email?email=matthijs29@live.com";
+
+    expect(validUrl(path)).toBe(false);
+  });
 });

@@ -131,4 +131,12 @@ describe("Get feature in Tice.js", () => {
 
     expect(fetch).toHaveBeenCalledWith("https://api.kanye.rest", {});
   });
+
+  test("Will work when passed in url is path with url in the parameters", () => {
+    const path = "/companies/send-preview-email?email=matthijs29@live.com";
+
+    tice.get(path);
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT + path, {});
+  });
 });
