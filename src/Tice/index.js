@@ -88,7 +88,7 @@ class Tice {
 
     if (this.#willSendToken(options) && this.defaultBearerToken) {
       fetchOptions.headers = fetchOptions.headers || {};
-      fetchOptions.headers.Authorization = `bearer ${this.defaultBearerToken}`;
+      fetchOptions.headers.Authorization = `Bearer ${this.defaultBearerToken}`;
     }
 
     return fetchOptions;
