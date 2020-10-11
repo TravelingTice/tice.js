@@ -58,7 +58,7 @@ describe("Delete feature in Tice.js", () => {
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
       method: "DELETE",
       headers: {
-        Authorization: "bearer mysecret",
+        Authorization: "Bearer mysecret",
       },
     });
   });

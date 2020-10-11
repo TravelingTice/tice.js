@@ -99,7 +99,7 @@ describe("Tice token workings", () => {
     tice.get("", { sendToken: true });
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
-      headers: { Authorization: "bearer mysecrettoken" },
+      headers: { Authorization: "Bearer mysecrettoken" },
     });
   });
 
@@ -113,7 +113,7 @@ describe("Tice token workings", () => {
     tice.get("");
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
-      headers: { Authorization: "bearer mysecrettoken" },
+      headers: { Authorization: "Bearer mysecrettoken" },
     });
   });
 
@@ -131,7 +131,7 @@ describe("Tice token workings", () => {
     tice.get("", { sendToken: true });
 
     expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
-      headers: { Authorization: "bearer mysecret" },
+      headers: { Authorization: "Bearer mysecret" },
     });
   });
 });

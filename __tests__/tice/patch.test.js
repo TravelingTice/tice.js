@@ -87,7 +87,7 @@ describe("Patch feature in Tice.js", () => {
       body: JSON.stringify(bodyObj),
       headers: {
         "Content-Type": "application/json",
-        Authorization: "bearer mysecret",
+        Authorization: "Bearer mysecret",
       },
     });
   });
