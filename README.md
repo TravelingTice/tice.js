@@ -94,7 +94,16 @@ tice.put("https://api.com/put-endpoint", {
 Because the `delete` keyword is a reserved word in Javascript, you can use the `_delete` method from Tice:
 
 ```javascript
-tice._delete("https://api.com/put-endpoint");
+tice._delete("https://api.com/delete-endpoint");
+```
+
+Delete can also be used with a body:
+
+```javascript
+tice._delete("https://api.com/delete-endpoint", {
+  field1: "value1",
+  field2: "value2",
+});
 ```
 
 ## Error handling

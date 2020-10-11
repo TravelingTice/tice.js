@@ -61,6 +61,25 @@ describe("Delete feature in Tice.js", () => {
     });
   });
 
+  test("should call fetch with body", () => {
+    const { _delete } = tice;
+
+    const bodyObj = {
+      value1: "Hi",
+      value2: "there",
+    };
+
+    _delete("", bodyObj);
+
+    expect(fetch).toHaveBeenCalledWith(TEST_API_ENDPOINT, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyObj),
+    });
+  });
+
   test("should receive a parsed json response", async () => {
     const { _delete } = tice;
 
