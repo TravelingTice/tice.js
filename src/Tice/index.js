@@ -28,6 +28,7 @@ class Tice {
       options,
       "POST"
     );
+    
     fetchOptions.body = JSON.stringify(body);
 
     return this.#fetchAction(address, fetchOptions);
@@ -49,32 +50,38 @@ class Tice {
       options,
       "PATCH"
     );
+
     fetchOptions.body = JSON.stringify(body);
 
     return this.#fetchAction(address, fetchOptions);
   };
 
-  _delete = (endpoint = "/", options) => {
+  _delete = (endpoint = "/", body, options) => {
     const address = this.#constructAddress(endpoint);
 
     const fetchOptions = this.#constructFetchOptionsFromOptions(
       options,
-      "DELETE"
+      "DELETE",
+      !!body
     );
+
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
 
     return this.#fetchAction(address, fetchOptions);
   };
 
-  #constructFetchOptionsFromOptions = (options, method) => {
+  #constructFetchOptionsFromOptions = (options, method, hasBody = true) => {
     const fetchOptions = {};
 
     if (method) {
       fetchOptions.method = method;
     }
 
-    const methodsWithContentType = ["POST", "PUT", "PATCH"];
+    const methodsWithContentType = ["POST", "PUT", "PATCH", "DELETE"];
 
-    if (methodsWithContentType.includes(method)) {
+    if (methodsWithContentType.includes(method) && hasBody) {
       fetchOptions.headers = {};
       fetchOptions.headers["Content-Type"] = "application/json";
     }

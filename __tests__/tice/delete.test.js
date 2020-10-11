@@ -4,7 +4,7 @@ const { Response } = jest.requireActual("node-fetch");
 
 const TEST_API_ENDPOINT = "https://myexampleapp.com/v1";
 
-const tice = new Tice({ baseEndpoint: TEST_API_ENDPOINT });
+let tice = new Tice({ baseEndpoint: TEST_API_ENDPOINT });
 
 const sampleFetchResponse = {
   success: true,
@@ -24,6 +24,8 @@ fetch.mockImplementation(() => {
 // Clear all mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();
+
+  tice = new Tice({ baseEndpoint: TEST_API_ENDPOINT });
 });
 
 describe("Delete feature in Tice.js", () => {
