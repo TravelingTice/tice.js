@@ -1,7 +1,7 @@
 import endsWith from "./endsWith";
 import validUrl from "./validUrl";
 
-const sanitizeUrl = (url) => {
+const sanitizeUrl = (url: string) => {
   if (!url) return "";
 
   if (!validUrl(url)) {
@@ -16,4 +16,4 @@ const sanitizeUrl = (url) => {
   return url;
 };
 
-module.exports = sanitizeUrl;
+export default sanitizeUrl;

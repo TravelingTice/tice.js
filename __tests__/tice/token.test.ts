@@ -13,7 +13,8 @@ const TEST_API_ENDPOINT = "https://myexampleapp.com/v1";
 
 // Mock the fetch function for us
 jest.mock("isomorphic-fetch");
-fetch.mockImplementation(() => {
+
+(fetch as jest.Mock).mockImplementation(() => {
   return Promise.resolve(
     new Response(JSON.stringify({ success: true }), {
       headers: { "Content-Type": "application/json" },

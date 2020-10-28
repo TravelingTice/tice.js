@@ -2,61 +2,90 @@ import fetch from "isomorphic-fetch";
 import validUrl from "../utils/validUrl";
 import sanitizeUrl from "../utils/sanitizeUrl";
 import handleResponse from "../utils/handleResponse";
+import {
+  ConstructorParams,
+  InputOptions,
+  FetchOptions,
+  Method,
+  Body,
+} from "./types";
 
 class Tice {
-  constructor(options = {}) {
-    this.baseEndpoint = sanitizeUrl(options.baseEndpoint);
+  baseEndpoint: string;
+  defaultOnError: (err?: any) => void;
+  defaultBearerToken: string | undefined;
+  defaultSendToken: boolean;
+
+  constructor(options: ConstructorParams = {}) {
+    this.baseEndpoint = sanitizeUrl(options.baseEndpoint || "");
     this.defaultOnError = options.defaultOnError || this.#defaultErrorHandler;
     this.defaultBearerToken = options.defaultBearerToken;
     this.defaultSendToken = options.defaultSendToken || false;
   }
 
-  #defaultErrorHandler = (err) => console.log(err);
+  #defaultErrorHandler = (err: any) => console.log(err);
 
-  get = (endpoint = "/", options) => {
-    const address = this.#constructAddress(endpoint);
-
-    const fetchOptions = this.#constructFetchOptionsFromOptions(options);
-
-    return this.#fetchAction(address, fetchOptions);
-  };
-
-  post = (endpoint = "/", body, options) => {
+  get = (endpoint = "/", options?: InputOptions) => {
     const address = this.#constructAddress(endpoint);
 
     const fetchOptions = this.#constructFetchOptionsFromOptions(
       options,
-      "POST"
+      undefined,
+      false
     );
-    
-    fetchOptions.body = JSON.stringify(body);
 
     return this.#fetchAction(address, fetchOptions);
   };
 
-  put = (endpoint = "/", body, options) => {
-    const address = this.#constructAddress(endpoint);
-
-    const fetchOptions = this.#constructFetchOptionsFromOptions(options, "PUT");
-    fetchOptions.body = JSON.stringify(body);
-
-    return this.#fetchAction(address, fetchOptions);
-  };
-
-  patch = (endpoint = "/", body, options) => {
+  post = (endpoint = "/", body?: Body, options?: InputOptions) => {
     const address = this.#constructAddress(endpoint);
 
     const fetchOptions = this.#constructFetchOptionsFromOptions(
       options,
-      "PATCH"
+      "POST",
+      true
     );
 
-    fetchOptions.body = JSON.stringify(body);
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
 
     return this.#fetchAction(address, fetchOptions);
   };
 
-  _delete = (endpoint = "/", body, options) => {
+  put = (endpoint = "/", body?: Body, options?: InputOptions) => {
+    const address = this.#constructAddress(endpoint);
+
+    const fetchOptions = this.#constructFetchOptionsFromOptions(
+      options,
+      "PUT",
+      true
+    );
+
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
+
+    return this.#fetchAction(address, fetchOptions);
+  };
+
+  patch = (endpoint = "/", body?: Body, options?: InputOptions) => {
+    const address = this.#constructAddress(endpoint);
+
+    const fetchOptions = this.#constructFetchOptionsFromOptions(
+      options,
+      "PATCH",
+      true
+    );
+
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
+
+    return this.#fetchAction(address, fetchOptions);
+  };
+
+  _delete = (endpoint = "/", body?: Body, options?: InputOptions) => {
     const address = this.#constructAddress(endpoint);
 
     const fetchOptions = this.#constructFetchOptionsFromOptions(
@@ -72,16 +101,18 @@ class Tice {
     return this.#fetchAction(address, fetchOptions);
   };
 
-  #constructFetchOptionsFromOptions = (options, method, hasBody = true) => {
-    const fetchOptions = {};
+  #constructFetchOptionsFromOptions = (
+    options: InputOptions,
+    method?: Method,
+    hasBody = false
+  ) => {
+    const fetchOptions: FetchOptions = {};
 
     if (method) {
       fetchOptions.method = method;
     }
 
-    const methodsWithContentType = ["POST", "PUT", "PATCH", "DELETE"];
-
-    if (methodsWithContentType.includes(method) && hasBody) {
+    if (hasBody) {
       fetchOptions.headers = {};
       fetchOptions.headers["Content-Type"] = "application/json";
     }
@@ -94,13 +125,13 @@ class Tice {
     return fetchOptions;
   };
 
-  #fetchAction = (address, object) => {
+  #fetchAction = (address: string, object: any) => {
     return fetch(address, object)
       .then((res) => handleResponse(res))
       .catch(this.defaultOnError);
   };
 
-  #constructAddress = (endpoint) => {
+  #constructAddress = (endpoint: string) => {
     if (validUrl(endpoint)) {
       return endpoint;
     } else {
@@ -108,7 +139,7 @@ class Tice {
     }
   };
 
-  #willSendToken = (options) => {
+  #willSendToken = (options: InputOptions) => {
     if (!options) {
       return this.defaultSendToken;
     }

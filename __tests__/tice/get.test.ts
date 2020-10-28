@@ -13,7 +13,7 @@ const sampleFetchResponse = {
 
 // Mock the fetch function for us
 jest.mock("isomorphic-fetch");
-fetch.mockImplementation(() => {
+(fetch as jest.Mock).mockImplementation(() => {
   return Promise.resolve(
     new Response(JSON.stringify(sampleFetchResponse), {
       headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ describe("Get feature in Tice.js", () => {
   test("will call fetch without any arguments and will fetch our base endpoint", async () => {
     tice.get();
 
-    expect(fetch.mock.calls.length).toBe(1);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(1);
 
     // second param is options, which by default is an empty object
     expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/", {});
@@ -49,7 +49,7 @@ describe("Get feature in Tice.js", () => {
 
     tice2.get();
 
-    expect(fetch.mock.calls.length).toBe(1);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(1);
 
     expect(fetch).toHaveBeenCalledWith("/", {});
   });
@@ -58,18 +58,18 @@ describe("Get feature in Tice.js", () => {
     const { get } = tice;
 
     get("/");
-    expect(fetch.mock.calls.length).toBe(1);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(1);
     expect(fetch).toHaveBeenCalledWith("https://myexampleapp.com/v1/", {});
 
     get("/customers/1");
-    expect(fetch.mock.calls.length).toBe(2);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(2);
     expect(fetch).toHaveBeenCalledWith(
       "https://myexampleapp.com/v1/customers/1",
       {}
     );
 
     get("/customers/1?embed=true");
-    expect(fetch.mock.calls.length).toBe(3);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(3);
     expect(fetch).toHaveBeenCalledWith(
       "https://myexampleapp.com/v1/customers/1?embed=true",
       {}
@@ -82,18 +82,18 @@ describe("Get feature in Tice.js", () => {
     const { get } = tice2;
 
     get("/");
-    expect(fetch.mock.calls.length).toBe(1);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(1);
     expect(fetch).toHaveBeenCalledWith("https://exampleapi.com/v1/", {});
 
     get("/customers/1");
-    expect(fetch.mock.calls.length).toBe(2);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(2);
     expect(fetch).toHaveBeenCalledWith(
       "https://exampleapi.com/v1/customers/1",
       {}
     );
 
     get("/customers/1?embed=true");
-    expect(fetch.mock.calls.length).toBe(3);
+    expect((fetch as jest.Mock).mock.calls.length).toBe(3);
     expect(fetch).toHaveBeenCalledWith(
       "https://exampleapi.com/v1/customers/1?embed=true",
       {}
@@ -111,7 +111,7 @@ describe("Get feature in Tice.js", () => {
   test("Will fetch an example text response already parsed", async () => {
     const { get } = tice;
 
-    fetch.mockImplementation(() => {
+    (fetch as jest.Mock).mockImplementation(() => {
       return Promise.resolve(
         new Response("<h2>TEst text</h2>", {
           headers: { "Content-Type": "text/plain" },

@@ -1,10 +1,6 @@
 import sanitizeUrl from "../../src/utils/sanitizeUrl";
 
 describe("Sanitize url function", () => {
-  test("Should return empty string for no parameters", () => {
-    expect(sanitizeUrl()).toBe("");
-  });
-
   test("Should work for an empty string", () => {
     expect(sanitizeUrl("")).toBe("");
   });

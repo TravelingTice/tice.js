@@ -13,7 +13,7 @@ const sampleFetchResponse = {
 
 // Mock the fetch function for us
 jest.mock("isomorphic-fetch");
-fetch.mockImplementation(() => {
+(fetch as jest.Mock).mockImplementation(() => {
   return Promise.resolve(
     new Response(JSON.stringify(sampleFetchResponse), {
       headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ describe("Put feature in Tice.js", () => {
   test("should receive a parsed text response", async () => {
     const { put } = tice;
 
-    fetch.mockImplementation(() => {
+    (fetch as jest.Mock).mockImplementation(() => {
       return Promise.resolve(
         new Response("<h2>TEst text</h2>", {
           headers: { "Content-Type": "text/plain" },

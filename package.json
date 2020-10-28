@@ -17,6 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.5",
     "babel-jest": "^26.6.1",

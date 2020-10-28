@@ -1,14 +1,6 @@
 import validUrl from "../../src/utils/validUrl";
 
 describe("validUrl util function", () => {
-  test("should throw argument error when passed no arguments", () => {
-    try {
-      validUrl();
-    } catch (e) {
-      expect(e.message).toBe("Missing url argument");
-    }
-  });
-
   test("should return false for an empty string", () => {
     expect(validUrl("")).toBe(false);
   });

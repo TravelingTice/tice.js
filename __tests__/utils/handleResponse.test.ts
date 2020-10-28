@@ -1,5 +1,4 @@
 import handleResponse from "../../src/utils/handleResponse";
-import fetch from "isomorphic-fetch";
 const { Response } = jest.requireActual("node-fetch");
 
 const testResponse = new Response(JSON.stringify({ success: true }), {
@@ -23,13 +22,6 @@ const sampleTextResponseObject = new Response(sampleTextResponse, {
 });
 
 describe("handleResponse util function", () => {
-  test("Should throw when passed in the wrong argument (not a response object)", () => {
-    expect(() => handleResponse()).toThrow();
-    expect(() => handleResponse("")).toThrow();
-    expect(() => handleResponse(false)).toThrow();
-    expect(() => handleResponse(99393)).toThrow();
-  });
-
   test("Should work with a normal response object", () => {
     expect(() => handleResponse(testResponse)).not.toThrow();
   });
