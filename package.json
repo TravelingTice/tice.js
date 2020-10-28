@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepare": "tsc"
   },
   "author": "Matthijs Kralt",
   "license": "MIT",
