@@ -1,5 +1,5 @@
-const endsWith = require("./endsWith");
-const validUrl = require("./validUrl");
+import endsWith from "./endsWith";
+import validUrl from "./validUrl";
 
 const sanitizeUrl = (url) => {
   if (!url) return "";

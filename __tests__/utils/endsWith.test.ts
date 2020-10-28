@@ -1,11 +1,6 @@
 import endsWith from "../../src/utils/endsWith";
 
 describe("EndsWith util function", () => {
-  test("Works with wrong number of arguments", () => {
-    expect(endsWith()).toBeFalsy();
-    expect(endsWith("hi there")).toBeFalsy();
-  });
-
   test("Will work with empty strings", () => {
     expect(endsWith("", "")).toBeTruthy();
     expect(endsWith(" ", "")).toBeFalsy();
@@ -22,11 +17,11 @@ describe("EndsWith util function", () => {
     expect(endsWith("https://webinargeek.com/v1", "1")).toBeTruthy();
   });
 
-  test("Will work with numbers", () => {
-    expect(endsWith("538926", 6)).toBeTruthy();
-    expect(endsWith(583974678, 8)).toBeTruthy();
-    expect(endsWith(583974678, "8")).toBeTruthy();
-    expect(endsWith(431343, "3")).toBeTruthy();
-    expect(endsWith(431343, "8")).toBeFalsy();
-  });
+  // test("Will work with numbers", () => {
+  //   expect(endsWith("538926", 6)).toBeTruthy();
+  //   expect(endsWith(583974678, 8)).toBeTruthy();
+  //   expect(endsWith(583974678, "8")).toBeTruthy();
+  //   expect(endsWith(431343, "3")).toBeTruthy();
+  //   expect(endsWith(431343, "8")).toBeFalsy();
+  // });
 });
